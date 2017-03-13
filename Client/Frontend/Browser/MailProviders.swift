@@ -111,3 +111,17 @@ class MSOutlookIntegration: MailProvider {
         return constructEmailURLString(beginningScheme, metadata: metadata, supportedHeaders: supportedHeaders).asURL
     }
 }
+
+class YMailIntegration: MailProvider {
+    var beginningScheme = "ymail://mail/any/compose?"
+    var supportedHeaders = [
+        "to",
+        "cc",
+        "subject",
+        "body"
+    ]
+
+    func newEmailURLFromMetadata(_ metadata: MailToMetadata) -> URL? {
+        return constructEmailURLString(beginningScheme, metadata: metadata, supportedHeaders: supportedHeaders).asURL
+    }
+}
