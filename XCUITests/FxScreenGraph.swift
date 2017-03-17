@@ -332,4 +332,10 @@ extension Navigator {
             self.goto(TabTray)
         }
     }
+
+    func changeBrowserView(view: String) {
+        self.goto(BrowserTabMenu)
+        let app = XCUIApplication()
+        app.collectionViews.cells[view].tap()
+    }
 }
