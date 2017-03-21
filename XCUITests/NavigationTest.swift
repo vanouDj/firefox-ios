@@ -61,34 +61,14 @@ class NavigationTest: BaseTestCase {
 
     func testTapSignInShowsFxAFromTour() {
         navigator.goto(SettingsScreen)
-        // Open FxAccount from tour option in settings menu
-        let appsettingstableviewcontrollerTableviewTable = app.tables["AppSettingsTableViewController.tableView"]
-        appsettingstableviewcontrollerTableviewTable.staticTexts["Firefox needs to reopen for this change to take effect."].swipeUp()
-        let startTour = app.tables["AppSettingsTableViewController.tableView"].cells["Show Tour"]
-        startTour.tap()
-
-        // Swipe to check that all the screen are shown
-        let organizeStaticText = app.staticTexts["Organize"]
-        waitforExistence(organizeStaticText)
-        organizeStaticText.swipeLeft()
-
-        let customizeStaticText = app.staticTexts["Customize"]
-        waitforExistence(customizeStaticText)
-        customizeStaticText.swipeLeft()
-
-        let shareStaticText = app.staticTexts["Share"]
-        waitforExistence(shareStaticText)
-        shareStaticText.swipeLeft()
-
-        let chooseStaticText = app.staticTexts["Choose"]
-        waitforExistence(chooseStaticText)
-        chooseStaticText.swipeLeft()
-
-        let sycnStaticText = app.staticTexts["Sync your Devices."]
-        waitforExistence(sycnStaticText)
+        // Open FxAccount from tour option in settings menu and go throughout all the screens there
+        // Tour's first screen Organize
+        navigator.goto(Intro_Organize)
+        // Tour's last screen Sync
+        navigator.goto(Intro_Sync)
 
         // Finally Sign in to Firefox screen should be shown correctly
-        app.buttons["Sign in to Firefox"].tap()
+        navigator.goto(FxSyncLogin)
         checkFirefoxSyncScreenShown()
 
         // Go back to NewTabScreen
@@ -111,8 +91,8 @@ class NavigationTest: BaseTestCase {
     func testTapSignInShowsFxAFromRemoteTabPanel() {
         navigator.goto(NewTabScreen)
         // Open FxAccount from remote tab panel and check the Sign in to Firefox scren
-        app.buttons["HomePanels.History"].tap()
-        XCTAssertTrue(app.tables["History List"].staticTexts["Synced Devices"].isHittable)
+        navigator.goto(HomePanel_History)
+        XCTAssertTrue(app.tables["History List"].staticTexts["Synced Devices"].isEnabled)
         app.tables["History List"].staticTexts["Synced Devices"].tap()
         app.tables.buttons["Sign in"].tap()
         checkFirefoxSyncScreenShown()

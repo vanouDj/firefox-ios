@@ -26,6 +26,7 @@ let URLBarOpen = "URLBarOpen"
 let NewPrivateTabScreen = "NewPrivateTabScreen"
 let PrivateTabTray = "PrivateTabTray"
 let PrivateBrowserTab = "PrivateBrowserTab"
+let FxSyncLogin = "FxSyncLogin"
 
 let allSettingsScreens = [
     SettingsScreen,
@@ -99,9 +100,16 @@ func createScreenGraph(_ app: XCUIApplication, url: String = "https://www.mozill
             }
 
             scene.tap(startBrowsingButton, to: NewTabScreen)
+            scene.tap(app.buttons["Sign in to Firefox"], to: FxSyncLogin)
         }
 
         i += 1
+    }
+
+    map.createScene(FxSyncLogin) { scene in
+        scene.backAction = {
+            app.buttons["Cancel"].tap()
+        }
     }
 
     map.createScene(NewTabScreen) { scene in
@@ -172,6 +180,7 @@ func createScreenGraph(_ app: XCUIApplication, url: String = "https://www.mozill
         scene.tap(table.cells["Logins"], to: LoginsSettings)
         scene.tap(table.cells["ClearPrivateData"], to: ClearPrivateDataSettings)
         scene.tap(table.cells["OpenWith.Setting"], to: OpenWithSettings)
+        scene.tap(table.cells["Show Tour"], to: Intro_Organize)
 
         scene.backAction = navigationControllerBackAction
     }
